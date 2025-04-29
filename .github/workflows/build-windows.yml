@@ -38,8 +38,7 @@ jobs:
         run: dir dist
 
       - name: Upload built EXE
--       uses: actions/upload-artifact@v3
-+       uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: sync-windows
           path: dist/sync.exe
