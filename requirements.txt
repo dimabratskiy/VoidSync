@@ -1,0 +1,4 @@
+selenium==4.x
+gspread==5.x
+oauth2client==4.x
+webdriver-manager==3.8.5
