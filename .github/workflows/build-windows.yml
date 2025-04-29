@@ -2,17 +2,22 @@ name: Build Windows EXE
 
 on:
   push:
-    branches: [ main ]    # или ваша ветка
+    branches:
+      - main
 
 jobs:
   build-windows:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Python
+      - name: Restore GCP credentials
+        run: |
+          echo "${{ secrets.GCP_CREDENTIALS }}" > credentials.json
+
+      - name: Setup Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
@@ -30,8 +35,11 @@ jobs:
             --add-data "drivers;drivers" \
             sync.py
 
+      - name: Debug dist folder
+        run: dir dist
+
       - name: Upload Windows EXE artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: sync-win
           path: dist/sync.exe
