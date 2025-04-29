@@ -2,22 +2,17 @@ name: Build Windows EXE
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]    # или ваша ветка
 
 jobs:
   build-windows:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Restore GCP credentials
-        run: |
-          echo "${{ secrets.GCP_CREDENTIALS }}" > credentials.json
-
-      - name: Setup Python 3.10
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
@@ -27,18 +22,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyinstaller webdriver-manager gspread oauth2client selenium
 
-      - name: Build EXE with PyInstaller
+      - name: Build executable with PyInstaller
         run: |
           pyinstaller --onefile \
             --add-data "chrome-portable;chrome-portable" \
             --add-data "credentials.json;." \
+            --add-data "drivers;drivers" \
             sync.py
 
-      - name: Debug dist folder
-        run: dir dist
-
-      - name: Upload built EXE
-        uses: actions/upload-artifact@v2
+      - name: Upload Windows EXE artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: sync-windows
+          name: sync-win
           path: dist/sync.exe
