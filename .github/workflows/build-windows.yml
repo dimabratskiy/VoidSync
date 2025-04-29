@@ -34,12 +34,12 @@ jobs:
             --add-data "credentials.json;." \
             sync.py
 
-      - name: Debug directory contents
+      - name: Debug dist folder
         run: dir dist
 
       - name: Upload built EXE
-        uses: actions/upload-artifact@v3
+-       uses: actions/upload-artifact@v3
++       uses: actions/upload-artifact@v2
         with:
           name: sync-windows
-          # убедитесь, что dist/sync.exe реально существует:
           path: dist/sync.exe
