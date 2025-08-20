@@ -2,3 +2,10 @@ selenium==4.x
 gspread==5.x
 oauth2client==4.x
 webdriver-manager==3.8.5
+
+# Backend platform dependencies
+Django==5.0.6
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.3.1
+django-filter==24.3
+PyJWT==2.8.0
